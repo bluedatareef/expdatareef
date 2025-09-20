@@ -1,8 +1,8 @@
 import React, { useMemo, useEffect } from 'react';
+import { GoogleGenAI } from "@google/genai";
 import { QuestionCard } from './QuestionCard';
 import type { Question, Answers, AnswerObject, AiContact, SectionTimestamps } from '../types';
 import { Type } from "@google/genai";
-import { ai } from '../utils/geminiClient';
 import { generateFullAnswerContext } from '../utils/aiHelper';
 import { FormAccordion } from './FormAccordion';
 
@@ -20,6 +20,7 @@ interface QuestionnaireProps {
   setActiveQuestion: (questionId: string | null) => void;
   sectionTimestamps: SectionTimestamps;
   isAdmin: boolean;
+  geminiApiKey: string;
 }
 
 const getSectionCompletion = (questions: Question[], answers: Answers) => {
@@ -46,7 +47,8 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({
     activeQuestion,
     setActiveQuestion,
     sectionTimestamps,
-    isAdmin
+    isAdmin,
+    geminiApiKey
 }) => {
   const [loadingAiContactsSection, setLoadingAiContactsSection] = React.useState<string | null>(null);
 
@@ -80,6 +82,13 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({
   
   const handleAiSuggestContacts = async (section: string) => {
     setLoadingAiContactsSection(section);
+    
+    if (!geminiApiKey) {
+        alert("Please configure your Gemini API key in settings before using AI features.");
+        setLoadingAiContactsSection(null);
+        return;
+    }
+    
     try {
         const fullContext = generateFullAnswerContext(questions, answers, destination);
 
@@ -89,6 +98,7 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({
         ${fullContext}
         `;
         
+        const ai = new GoogleGenAI({ apiKey: geminiApiKey });
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -158,6 +168,7 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({
                             isAdmin={isAdmin}
                             questions={questions}
                             answers={answers}
+                           geminiApiKey={geminiApiKey}
                         />
                     ))}
                 </div>

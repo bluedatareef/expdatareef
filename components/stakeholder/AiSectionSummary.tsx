@@ -1,8 +1,8 @@
 
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { GoogleGenAI } from "@google/genai";
 import type { Answers, Question, AnswerObject, SdgDetailInfo } from '../../types';
-import { ai } from '../../utils/geminiClient';
 import { AiMarkdown } from '../AiMarkdown';
 import { useTheme } from '../../context/ThemeContext';
 import { SdgAlignmentVisuals } from './SdgAlignmentVisuals';
@@ -14,9 +14,10 @@ interface AiSectionSummaryProps {
   sectionQuestions: Question[];
   sectionAnswers: Answers;
   destination: string;
+  geminiApiKey: string;
 }
 
-export const AiSectionSummary: React.FC<AiSectionSummaryProps> = ({ sectionName, sectionQuestions, sectionAnswers, destination }) => {
+export const AiSectionSummary: React.FC<AiSectionSummaryProps> = ({ sectionName, sectionQuestions, sectionAnswers, destination, geminiApiKey }) => {
   const [summary, setSummary] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +31,12 @@ export const AiSectionSummary: React.FC<AiSectionSummaryProps> = ({ sectionName,
   useEffect(() => {
     if (!shouldGenerate) {
       setSummary('');
+      return;
+    }
+
+    if (!geminiApiKey) {
+      setSummary('');
+      setError('Gemini API key not configured');
       return;
     }
 
@@ -57,6 +64,7 @@ export const AiSectionSummary: React.FC<AiSectionSummaryProps> = ({ sectionName,
       `;
 
       try {
+        const ai = new GoogleGenAI({ apiKey: geminiApiKey });
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -72,7 +80,7 @@ export const AiSectionSummary: React.FC<AiSectionSummaryProps> = ({ sectionName,
 
     generateSummary();
 
-  }, [JSON.stringify(sectionAnswers), sectionName, destination, sectionQuestions, shouldGenerate]);
+  }, [JSON.stringify(sectionAnswers), sectionName, destination, sectionQuestions, shouldGenerate, geminiApiKey]);
 
   const sdgAlignments = useMemo(() => {
     const isPositive = (answer: AnswerObject | undefined | null): boolean => {

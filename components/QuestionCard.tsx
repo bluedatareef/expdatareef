@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { GoogleGenAI } from "@google/genai";
 import { QuestionType, type Answers } from '../types';
 import type { Question, AnswerObject, AnswerValue } from '../types';
 import { FileUploader } from './FileUploader';
 import { useTheme } from '../context/ThemeContext';
-import { ai } from '../utils/geminiClient';
 import { Type } from "@google/genai";
 import { generateFullAnswerContext } from '../utils/aiHelper';
 
@@ -15,6 +15,7 @@ interface QuestionCardProps {
   isAdmin: boolean;
   questions: Question[];
   answers: Answers;
+  geminiApiKey: string;
 }
 
 const BooleanToggle: React.FC<{ value: boolean; onChange: (value: boolean) => void }> = ({ value, onChange }) => {
@@ -48,7 +49,7 @@ const getSourceText = (url: string): string => {
   }
 };
 
-export const QuestionCard: React.FC<QuestionCardProps> = ({ question, currentAnswer, onAnswerChange, destination, isAdmin, questions, answers }) => {
+export const QuestionCard: React.FC<QuestionCardProps> = ({ question, currentAnswer, onAnswerChange, destination, isAdmin, questions, answers, geminiApiKey }) => {
   const [researchStatus, setResearchStatus] = useState<'idle' | 'researching' | 'error'>('idle');
   const questionText = question.text.replace(/{Destination}/g, destination);
   const theme = useTheme();
@@ -63,6 +64,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question, currentAns
 
   const handleAiResearch = async () => {
       setResearchStatus('researching');
+      
+      if (!geminiApiKey) {
+          alert("Please configure your Gemini API key in settings before using AI features.");
+          setResearchStatus('idle');
+          return;
+      }
+      
       try {
           const fullContext = generateFullAnswerContext(questions, answers, destination);
           const prompt = `You are an expert AI research assistant for sustainable tourism assessments. Your goal is to find a single, factual, and verifiable answer from a public source for the question provided.
@@ -95,6 +103,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question, currentAns
           - For Boolean questions, the "answer" string must be exactly "true" or "false".
           - For Number questions, the "answer" string must contain only the number (e.g., "12345", "55.7").`;
 
+          const ai = new GoogleGenAI({ apiKey: geminiApiKey });
           const response = await ai.models.generateContent({
               model: "gemini-2.5-flash",
               contents: prompt,

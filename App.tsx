@@ -366,12 +366,14 @@ const MainLayout: React.FC<Omit<AppProps, 'selectedDestination'> & {
               setActiveQuestion={setActiveQuestion}
               sectionTimestamps={sectionTimestamps}
               isAdmin={isLoggedIn}
+             geminiApiKey={apiKeys.gemini}
             />
           ) : view === 'dashboard' ? (
             <Dashboard 
               answers={answers}
               destination={destination}
               questions={questions}
+             geminiApiKey={apiKeys.gemini}
             />
           ) : view === 'map' ? (
             <MapView 
@@ -389,6 +391,7 @@ const MainLayout: React.FC<Omit<AppProps, 'selectedDestination'> & {
                 onDestinationChange={(dest) => {
                   handleChangeDestination();
                 }}
+               geminiApiKey={apiKeys.gemini}
              />
           )}
         </main>

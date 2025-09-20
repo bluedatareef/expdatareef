@@ -13,9 +13,10 @@ interface DashboardProps {
   answers: Answers;
   destination: string;
   questions: Question[];
+  geminiApiKey: string;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ answers, destination, questions }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ answers, destination, questions, geminiApiKey }) => {
   const [modalContent, setModalContent] = useState<{ title: string; content: string; } | null>(null);
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
   const [aiSummary, setAiSummary] = useState('');
@@ -35,6 +36,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ answers, destination, ques
     setIsGeneratingSummary(true);
     setAiSummary('');
 
+    if (!geminiApiKey) {
+        alert("Please configure your Gemini API key in settings before using AI features.");
+        setIsGeneratingSummary(false);
+        return;
+    }
+
     const answeredQuestions = questions.filter(q => {
         const answer = answers[q.id];
         return answer && answer.value !== null && answer.value !== undefined && answer.value !== '';
@@ -47,7 +54,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ answers, destination, ques
     }
 
     try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const ai = new GoogleGenAI({ apiKey: geminiApiKey });
         
         const context = answeredQuestions.map(q => {
             const answerObj = answers[q.id];
