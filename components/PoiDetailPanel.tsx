@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import type { Poi } from '../types';
 import { useTheme } from '../context/ThemeContext';

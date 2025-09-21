@@ -1,3 +1,5 @@
+'use client'
+
 // context/ThemeContext.tsx
 import React, { createContext, useContext, useMemo } from 'react';
 import { generateTheme, destinationThemes, Theme } from '../constants/teamColors';

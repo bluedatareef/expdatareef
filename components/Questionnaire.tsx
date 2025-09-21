@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { QuestionCard } from './QuestionCard';

@@ -1,4 +1,6 @@
 
+'use client'
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { destinations } from '../../constants/destinations';
 import { stakeholderBackgroundImages } from '../../constants/stakeholderImages';

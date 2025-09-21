@@ -1,4 +1,6 @@
 
+'use client'
+
 import React, { useState, ReactNode } from 'react';
 
 interface AccordionProps {

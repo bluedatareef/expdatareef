@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import type { ApiKeys } from '../types';
 import { useTheme } from '../context/ThemeContext';

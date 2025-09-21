@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import type { Question, Answers } from '../types';
 import { useTheme } from '../context/ThemeContext';

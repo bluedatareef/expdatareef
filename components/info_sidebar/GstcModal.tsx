@@ -1,4 +1,6 @@
 
+'use client'
+
 import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 // FIX: Import GstcCriterionDetail type from the correct file.

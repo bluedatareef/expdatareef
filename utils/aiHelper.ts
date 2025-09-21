@@ -1,3 +1,5 @@
+'use client'
+
 import type { Answers, Question } from '../types';
 import { destinationProfiles } from '../constants/destinationProfiles';
 

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import type { SdgDetailInfo } from '../../types';
 import { SdgModal } from './SdgModal';

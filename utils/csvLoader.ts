@@ -1,4 +1,6 @@
 
+'use client'
+
 import type { Metric, BcStrategy } from '../types';
 
 /**

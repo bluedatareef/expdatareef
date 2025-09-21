@@ -1,4 +1,6 @@
 
+'use client'
+
 import React, { useState, useMemo } from 'react';
 // FIX: Import GstcCriterionDetail type from the correct file.
 import type { GstcCriterionDetail } from '../../types';

@@ -1,3 +1,5 @@
+'use client'
+
 import { questions } from '../constants/questions';
 import type { Answers, Question } from '../types';
 import { QuestionType } from '../types';

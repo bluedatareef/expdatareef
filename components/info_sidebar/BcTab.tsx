@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useMemo } from 'react';
 import type { BcStrategy, InfoModalData } from '../../types';
 import { ViewToggle } from './ViewToggle';

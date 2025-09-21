@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react';
 import type { UserProfile } from '../types';
 import { useTheme } from '../context/ThemeContext';

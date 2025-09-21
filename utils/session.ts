@@ -1,3 +1,5 @@
+'use client'
+
 const CURRENT_USER_KEY = 'currentUserEmail';
 
 export const getCurrentUserEmail = (): string | null => {

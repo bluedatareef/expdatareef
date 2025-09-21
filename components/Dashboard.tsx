@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import type { Answers, Question, AnswerObject } from '../types';

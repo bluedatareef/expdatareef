@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import type { AiContact } from '../types';
 import { useTheme } from '../context/ThemeContext';

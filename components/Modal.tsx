@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useTheme } from '../context/ThemeContext';

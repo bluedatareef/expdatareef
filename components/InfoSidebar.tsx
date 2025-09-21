@@ -1,4 +1,6 @@
 
+'use client'
+
 import React, { useState } from 'react';
 // FIX: GstcCriterionDetail type has been added to this import.
 import type { Metric, SdgDetailInfo, BcStrategy, InfoModalData, GstcCriterionDetail } from '../types';

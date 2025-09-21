@@ -1,3 +1,5 @@
+'use client'
+
 import { get, set, del, keys } from 'idb-keyval';
 import type { Answers, SectionTimestamps, UserProfile } from '../types';
 

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Map, { Marker, MapRef } from 'react-map-gl';
 import { destinationObjects } from '../constants/destinations';

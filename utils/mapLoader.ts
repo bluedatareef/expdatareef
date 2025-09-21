@@ -1,3 +1,5 @@
+'use client'
+
 import type { Poi } from '../types';
 
 const fetchCsv = async (url: string) => {

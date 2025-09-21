@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useMemo } from 'react';
 import { FormSidebarContent } from './sidebar/FormSidebarContent';
 import { DashboardSidebarContent } from './sidebar/DashboardSidebarContent';

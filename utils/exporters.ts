@@ -1,3 +1,5 @@
+'use client'
+
 import type { Question, Answers, AnswerObject } from '../types';
 import * as XLSX from 'xlsx';
 
